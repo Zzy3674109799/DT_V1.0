@@ -1,0 +1,4 @@
+{
+  "desc": "行迹山河页面索引",
+  "rules": [{ "action": "allow", "page": "*" }]
+}

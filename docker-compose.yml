@@ -1,0 +1,89 @@
+services:
+  db:
+    image: postgis/postgis:16-3.4-alpine
+    container_name: xingji-shanhe-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: xingji
+      POSTGRES_USER: xingji
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - xingji_pgdata:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/001-init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U xingji -d xingji"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks:
+      - xingji
+
+  redis:
+    image: redis:7-alpine
+    container_name: xingji-shanhe-redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory-policy", "allkeys-lru"]
+    volumes:
+      - xingji_redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    networks:
+      - xingji
+
+  app:
+    build: .
+    container_name: xingji-shanhe-app
+    restart: unless-stopped
+    environment:
+      PORT: 8080
+      DATABASE_URL: ${DATABASE_URL}
+      AUTH_MODE: demo
+      AUTH_SECRET: ${AUTH_SECRET}
+      STORAGE_MODE: ${STORAGE_MODE}
+      STORAGE_ROOT: /app/storage
+      PAYMENT_MODE: ${PAYMENT_MODE}
+      REDIS_URL: ${REDIS_URL}
+    ports:
+      - "8099:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - xingji
+    volumes:
+      - xingji_media:/app/storage
+
+  worker:
+    build: .
+    container_name: xingji-shanhe-worker
+    restart: unless-stopped
+    command: ["node", "worker.js"]
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      STORAGE_ROOT: /app/storage
+      MEDIA_WORKER_POLL_MS: 1500
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - xingji
+    volumes:
+      - xingji_media:/app/storage
+
+networks:
+  xingji:
+    name: xingji-shanhe-network
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.99.0.0/24
+
+volumes:
+  xingji_pgdata:
+  xingji_media:
+  xingji_redis:

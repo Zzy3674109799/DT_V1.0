@@ -1,0 +1,14 @@
+node_modules/
+storage/
+.env
+.env.*
+!.env.example
+*.log
+*.pid
+*.pem
+*.key
+*.p12
+*.pfx
+miniprogram/project.private.config.json
+.DS_Store
+Thumbs.db

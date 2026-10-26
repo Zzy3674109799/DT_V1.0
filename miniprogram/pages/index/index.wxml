@@ -1,0 +1,15 @@
+<view class="page">
+  <view class="hero"><text class="hero-title">行迹山河</text><text class="hero-copy">把走过的路，点成自己的山河</text></view>
+  <view wx:if="{{loading}}" class="card"><text>正在加载地图…</text></view>
+  <block wx:else>
+    <view class="card stats">
+      <view><text class="stat-value">{{dashboard.stats.places_lit}}</text><text class="stat-label">已点亮地点</text></view>
+      <view><text class="stat-value">{{dashboard.stats.visits_count}}</text><text class="stat-label">旅行记录</text></view>
+      <view><text class="stat-value">{{dashboard.stats.score}}</text><text class="stat-label">累计积分</text></view>
+      <view><text class="stat-value">{{dashboard.stats.provinces}}</text><text class="stat-label">走过省份</text></view>
+    </view>
+    <view class="card"><text class="card-title">我的中国地图</text><map class="map" latitude="35.8617" longitude="104.1954" scale="4" markers="{{markers}}" bindmarkertap="onMarkerTap" show-location></map><button class="primary" bindtap="checkin">定位打卡</button></view>
+    <view wx:if="{{selectedPlace}}" class="card"><text class="card-title">{{selectedPlace.name}}</text><text>{{selectedPlace.province}} · {{selectedPlace.description}}</text></view>
+    <view class="card"><text class="card-title">最近记录</text><view wx:for="{{dashboard.visits}}" wx:key="id" class="place-row"><text class="place-name">{{item.name}}</text><text class="place-status">{{item.visit_type}}</text></view></view>
+  </block>
+</view>

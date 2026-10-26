@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>行迹山河 · 中国旅行登山点亮</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <div class="brand"><span class="brand-mark">✦</span><div><strong>行迹山河</strong><small>把走过的路，点成自己的山河</small></div></div>
+        <div class="top-actions"><span class="status-dot"></span><span>演示账户 · 山野小队长</span><button class="avatar">山</button></div>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div>
+            <p class="eyebrow">CHINA TRAVEL / 2026 SEASON</p>
+            <h1>每一次出发，<em>点亮一块山河。</em></h1>
+            <p class="hero-copy">记录城市、景区与山峰，把照片和故事留在地图上。和你的 PACK 一起，完成下一场挑战。</p>
+            <div class="hero-actions"><button class="primary" id="openCheckin">＋ 点亮一个地方</button><button class="ghost" id="scrollChallenges">查看挑战 →</button></div>
+          </div>
+          <div class="hero-orbit"><div class="orbit-ring ring-one"></div><div class="orbit-ring ring-two"></div><div class="orbit-core">✦<small>本季<br/>已出发</small></div><span class="orbit-label label-a">山峰 07</span><span class="orbit-label label-b">照片 128</span><span class="orbit-label label-c">PACK 03</span></div>
+        </section>
+
+        <section class="stats" id="stats"></section>
+
+        <section class="content-grid">
+          <div class="map-card card">
+            <div class="section-head"><div><span class="kicker">MY ATLAS</span><h2>我的中国地图</h2></div><span class="map-filter">全部记录⌄</span></div>
+            <div class="map-stage" id="mapStage"><div class="map-water"></div><div class="map-land land-one"></div><div class="map-land land-two"></div><div class="map-land land-three"></div><div class="map-land land-four"></div><div class="map-label label-north">北方</div><div class="map-label label-south">西南山地</div></div>
+            <div class="legend"><span><i class="legend-dot lit"></i>已点亮</span><span><i class="legend-dot summit"></i>已登顶</span><span><i class="legend-dot plan"></i>想去</span><span class="legend-count" id="mapCount"></span></div>
+          </div>
+          <aside class="side-column">
+            <div class="card insight-card"><div class="section-head"><div><span class="kicker">THIS SEASON</span><h2>本季旅程</h2></div><span class="spark">↗</span></div><div class="progress-track"><div class="progress-value" id="seasonProgress"></div></div><div class="progress-meta"><strong id="progressText">0 / 5</strong><span>座山峰已点亮</span></div><p class="muted">再完成 2 座山峰，就能解锁「金色山河」勋章。</p></div>
+            <div class="card pack-card"><div class="pack-art">✺</div><div><span class="kicker">YOUR PACK</span><h2 id="packName">山野不独行</h2><p class="muted" id="packMeta">正在加载成员…</p><button class="text-button" id="packAction">打开 PACK →</button></div></div>
+            <div class="card trip-card"><div class="section-head"><div><span class="kicker">TRIP MODEL</span><h2>我的行程</h2></div><span class="live-pill">M1</span></div><div id="tripList" class="trip-list"><p class="muted">正在加载行程…</p></div></div>
+          </aside>
+        </section>
+
+        <section class="lower-grid" id="challenges">
+          <div class="card challenge-card"><div class="section-head"><div><span class="kicker">CHALLENGES</span><h2>正在进行的挑战</h2></div><button class="text-button">全部挑战 →</button></div><div id="challengeList" class="challenge-list"></div></div>
+          <div class="card activity-card"><div class="section-head"><div><span class="kicker">RECENT LOGS</span><h2>最近的记录</h2></div><span class="live-pill">● LIVE</span></div><div id="activityList" class="activity-list"></div></div>
+        </section>
+        <section class="lower-grid m3-grid" id="feedSection">
+          <div class="card feed-card"><div class="section-head"><div><span class="kicker">PACK FEED</span><h2>队伍动态</h2></div><span class="live-pill">M3</span></div><div id="feedList" class="feed-list"><p class="muted">正在加载动态…</p></div></div>
+          <div class="card leaderboard-card"><div class="section-head"><div><span class="kicker">SEASON RANKING</span><h2>本季榜单</h2></div><span class="spark">↗</span></div><div id="leaderboardList" class="leaderboard-list"><p class="muted">正在加载榜单…</p></div></div>
+        </section>
+        <section class="lower-grid m4-grid" id="commerceSection">
+          <div class="card commerce-card"><div class="section-head"><div><span class="kicker">BRAND ACTIVITIES</span><h2>品牌与景区活动</h2></div><span class="live-pill">M4</span></div><input id="activityCoupon" class="commerce-coupon" placeholder="有优惠券？输入兑换码" /><div id="activityCommerceList"><p class="muted">正在加载活动…</p></div></div>
+          <div class="card membership-card"><div class="section-head"><div><span class="kicker">MEMBERSHIP</span><h2>我的会员</h2></div><span class="spark">✦</span></div><div id="membershipInfo"><p class="muted">正在加载会员状态…</p></div><div id="membershipPlans" class="membership-plans"></div></div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="checkinDialog"><form method="dialog" id="checkinForm"><div class="dialog-head"><div><span class="kicker">NEW MEMORY</span><h2>点亮一个地方</h2></div><button class="close" value="cancel">×</button></div><label>地点<select id="placeId" required></select></label><label>记录类型<select id="visitType"><option value="visited">到访过</option><option value="summit">登顶了</option><option value="planned">想去这里</option></select></label><label>日期<input id="visitedAt" type="date" required /></label><label>一句话记录<textarea id="note" placeholder="这次旅程最想记住什么？"></textarea></label><div class="media-drop">▧　照片 / 视频入口 <small>媒体上传将在下一版接入 COS/OSS</small></div><button class="primary full" value="default">保存并点亮</button></form></dialog>
+    <div id="toast" class="toast"></div>
+    <script src="/app.js"></script>
+  </body>
+</html>

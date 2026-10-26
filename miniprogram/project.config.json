@@ -1,0 +1,9 @@
+{
+  "description": "行迹山河原生微信小程序",
+  "compileType": "miniprogram",
+  "appid": "touristappid",
+  "projectname": "xingji-shanhe",
+  "miniprogramRoot": "./",
+  "setting": { "es6": true, "minified": true, "urlCheck": false, "postcss": true },
+  "condition": {}
+}
